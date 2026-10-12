@@ -1,75 +1,48 @@
-# React + TypeScript + Vite
+# Challenge · Árbol binario de búsqueda
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación React + TypeScript + Vite que permite construir, visualizar y recorrer un árbol binario de búsqueda (BST).
 
-Currently, two official plugins are available:
+## Ejecutar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+También se puede validar con `npm run build` y `npm run lint`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Cómo funciona
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `src/structures/TreeNode.ts` define los nodos del árbol. Cada nodo guarda un valor y referencias a sus hijos izquierdo y derecho.
+- `src/structures/BinarySearchTree.ts` implementa el árbol binario de búsqueda.
+- Al insertar un número menor, se recorre el lado izquierdo; si es mayor, se recorre el lado derecho.
+- Los números repetidos no se insertan en el árbol.
+- `search` busca un número recorriendo únicamente la rama correspondiente.
+- `inorder`, `preorder` y `postorder` implementan los recorridos principales del árbol.
+- `src/components/TreeVisualization.tsx` convierte el árbol a un formato visual usando `react-d3-tree`.
+- `src/components/InsertForm.tsx` permite insertar nuevos números.
+- `src/components/SearchForm.tsx` permite consultar si un número existe.
+- `src/components/TreeTraversals.tsx` muestra los resultados de cada recorrido.
+- `src/data/mockNumbers.ts` contiene los valores iniciales del árbol.
 
+## Recorridos
+
+Para el árbol inicial:
+
+```text
+        50
+       /  \
+     30    70
+    /  \  /  \
+   20  40 60  80
 ```
+
+Los recorridos son:
+
+```text
+Inorder:   20 → 30 → 40 → 50 → 60 → 70 → 80
+Preorder:  50 → 30 → 20 → 40 → 70 → 60 → 80
+Postorder: 20 → 40 → 30 → 60 → 80 → 70 → 50
+```
+
+El recorrido **Inorder** devuelve los valores ordenados porque se trata de un árbol binario de búsqueda.
