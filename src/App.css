@@ -1,0 +1,63 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: white;
+  color: #222;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  width: min(700px, calc(100% - 32px));
+  margin: 40px auto;
+}
+
+header { border-bottom: 1px solid #ddd; padding-bottom: 20px; }
+h1 { margin: 0 0 8px; font-size: 28px; }
+h1 span { color: inherit; }
+header p { margin: 0; color: #666; }
+.eyebrow, .label { color: #666; font-size: 12px; }
+
+.search-card, .panel {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+label, .label { display: block; margin-bottom: 8px; font-weight: bold; }
+.search-row, form { display: flex; gap: 8px; }
+input, select, button {
+  padding: 9px;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  font: inherit;
+}
+.search-row input { flex: 1; }
+button { background: #333; color: white; cursor: pointer; }
+button:hover { background: #555; }
+.search-card small { display: block; margin-top: 8px; color: #777; }
+
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.panel-heading { display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; }
+h2 { margin: 4px 0 12px; font-size: 20px; }
+.count { color: #666; }
+ol { padding: 0; margin: 0; list-style: none; }
+li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eee; }
+li:last-child { border-bottom: 0; }
+.rank { color: #777; }
+.product-name { flex: 1; text-transform: capitalize; }
+li strong small { color: #777; font-size: 11px; font-weight: normal; }
+.empty { color: #777; padding-top: 12px; }
+.all-products { margin-top: 16px; }
+.all-products ul { padding: 0; margin: 0; list-style: none; }
+form { flex-direction: column; }
+form input { width: 100%; }
+.message { display: block; margin-top: 10px; color: #28733a; }
+footer { margin-top: 24px; color: #777; font-size: 12px; }
+footer span { font-weight: bold; }
+
+@media (max-width: 600px) {
+  .content-grid { grid-template-columns: 1fr; }
+  .search-row { flex-direction: column; }
+}
