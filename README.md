@@ -1,75 +1,51 @@
-# React + TypeScript + Vite
+# Challenge · Cola de personas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación React + TypeScript + Vite que simula una cola de personas en un banco. Cada persona registra su nombre, el monto que desea retirar y su fecha de llegada.
 
-Currently, two official plugins are available:
+La cola sigue el principio **FIFO** (*First In, First Out*): la primera persona en llegar es la primera en ser atendida.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Ejecutar
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+También se puede validar con `npm run build` y `npm run lint`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Cómo funciona
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `src/structures/Queue.ts` define la estructura de datos genérica `Queue<T>`.
+- `enqueue` agrega una persona al final de la cola.
+- `dequeue` retira y devuelve la primera persona de la cola.
+- `peek` consulta quién está al frente sin retirarlo.
+- `size` devuelve la cantidad de personas en espera.
+- `isEmpty` verifica si la cola está vacía.
+- `getItems` devuelve una copia de los elementos para mostrarlos en la interfaz.
+- `src/models/Person.ts` define los datos de cada persona.
+- `src/App.tsx` contiene el formulario y la visualización de la cola.
 
+## Datos de una persona
+
+Cada persona tiene la siguiente información:
+
+```text
+id
+name
+withdrawalAmount
+arrivalDate
 ```
+
+Al enviar el formulario se crea una persona con un identificador único y la fecha actual, y luego se agrega al final de la cola.
+
+## Ejemplo
+
+Si llegan tres personas en este orden:
+
+```text
+Ana
+Carlos
+María
+```
+
+La persona al frente es `Ana`. Cuando se atienda y se ejecute `dequeue`, la siguiente persona será `Carlos`.
