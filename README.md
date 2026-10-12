@@ -1,75 +1,32 @@
-# React + TypeScript + Vite
+# Challenge 11 · Smart Search y Top Results
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación React + TypeScript + Vite que permite buscar productos por prefijo y obtener los productos más populares.
 
-Currently, two official plugins are available:
+## Ejecutar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+También se puede validar con `npm run build` y `npm run lint`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Cómo funciona
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `src/structures/ProductTrie.ts` define el Trie utilizado para guardar los productos y realizar búsquedas por prefijo.
+- `src/structures/MaxHeap.ts` define un Max-Heap. El producto con mayor popularidad siempre queda disponible en la raíz.
+- `src/data/products.ts` contiene los productos iniciales, cada uno con nombre y popularidad.
+- `src/types/Product.ts` define el tipo `Product` utilizado por las estructuras y la interfaz.
+- `App` construye el Trie, busca los productos que coinciden con el prefijo y los agrega a un Max-Heap para obtener el Top K.
+- La interfaz permite insertar productos, buscar en tiempo real y seleccionar si se quieren ver los primeros 1, 2, 3 o 5 resultados.
 
+## Ejemplo
+
+Al buscar el prefijo `air` con Top 2, el resultado es:
+
+```text
+air force   95
+air max     90
 ```
+
+Los productos también se muestran en la sección `Productos guardados`.
